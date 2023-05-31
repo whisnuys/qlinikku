@@ -6,6 +6,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.Navigation;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -41,6 +42,7 @@ public class PasienHome extends AppCompatActivity {
             }
         });
 
+
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
@@ -50,6 +52,11 @@ public class PasienHome extends AppCompatActivity {
         TextView mName = mNavigationView.getHeaderView(0).findViewById(R.id.profil_nama);
         TextView mEmail = mNavigationView.getHeaderView(0).findViewById(R.id.profil_email);
         TextView namaHome = findViewById(R.id.namaHome);
+
+        mNavigationView.getMenu().findItem(R.id.nav_logout).setOnMenuItemClickListener(menuItem -> {
+            logout();
+            return true;
+        });
 
         dbF.addValueEventListener(new ValueEventListener() {
             @Override
@@ -73,5 +80,12 @@ public class PasienHome extends AppCompatActivity {
         slideModels.add(new SlideModel(R.drawable.image_slider1, ScaleTypes.FIT));
         slideModels.add(new SlideModel(R.drawable.image_slider1, ScaleTypes.FIT));
         imageSliderHome.setImageList(slideModels,ScaleTypes.FIT);
+    }
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    private void logout(){
+        firebaseAuth.signOut();
+
+        Intent intent = new Intent(PasienHome.this, Login.class);
+        startActivity(intent);
     }
 }

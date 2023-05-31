@@ -149,6 +149,13 @@
                 android:elevation="0dp"
                 />
 
+            <ProgressBar
+                android:id="@+id/progressbar2"
+                android:layout_marginTop="20dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                style="@style/Widget.AppCompat.ProgressBar"/>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

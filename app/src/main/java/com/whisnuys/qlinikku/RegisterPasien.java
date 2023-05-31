@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -36,6 +37,7 @@ public class RegisterPasien extends AppCompatActivity {
      Button btnDatePicker, btnRegister;
      EditText selectedDate, namaLengkapEditText, nikEditText, alamatEditText, noHpEditText, emailEditText, passwordEditText;
      Spinner jenisKelamin;
+     ProgressBar progressBar;
      String tglLahir, namaLengkap, nik, alamat, noHp, email, password, jk;
      DatePickerDialog datePickerDialog;
      FirebaseAuth auth;
@@ -56,6 +58,8 @@ public class RegisterPasien extends AppCompatActivity {
         passwordEditText = findViewById(R.id.etRegisterPassword);
         jenisKelamin = findViewById(R.id.spinnerJK);
         btnRegister = findViewById(R.id.btnRegisterSubmit);
+        progressBar = findViewById(R.id.progressbar2);
+        progressBar.setVisibility(View.GONE);
         auth = FirebaseAuth.getInstance();
 
         btnDatePicker.setOnClickListener(new View.OnClickListener() {
@@ -63,25 +67,6 @@ public class RegisterPasien extends AppCompatActivity {
             public void onClick(View view) {
 
                 SimpleDateFormat simpledateformat = new SimpleDateFormat("dd MMM yyyy", new Locale("in", "ID"));
-//                Calendar newDate = Calendar.getInstance();
-//                int year = newDate.get(Calendar.YEAR);
-//                int month = newDate.get(Calendar.MONTH);
-//                int day = newDate.get(Calendar.DAY_OF_MONTH);
-//                newDate.set(year, month, day);
-//                String date1 = simpledateformat.format(newDate.getTime());
-//                Locale.setDefault(new Locale("in", "ID"));
-//
-//                DatePickerDialog datePickerDialog = new DatePickerDialog(
-//                        RegisterPasien.this,R.style.DialogTheme,
-//                        new DatePickerDialog.OnDateSetListener() {
-//                            @Override
-//                            public void onDateSet(DatePicker view, int year,
-//                                                  int monthOfYear, int dayOfMonth) {
-//                                selectedDate.setText(date1);
-//                            }
-//                        },
-//                        year, month, day);
-//                datePickerDialog.show();
                 Calendar calendar = Calendar.getInstance();
                 Locale.setDefault(new Locale("in", "ID"));
 
@@ -102,6 +87,7 @@ public class RegisterPasien extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressBar.setVisibility(View.VISIBLE);
                 cekDataPasien();
             }
         });
@@ -156,9 +142,12 @@ public class RegisterPasien extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Jenis Kelamin harus diisi", Toast.LENGTH_LONG).show();
             jenisKelamin.requestFocus();
             return;
-        }
-        else {
-            buatAkunPasien();
+        } else {
+            if(password.length() < 6){
+                Toast.makeText(this, "Password terlalu pendek", Toast.LENGTH_SHORT).show();
+            } else {
+                buatAkunPasien();
+            }
         }
     }
 
@@ -167,6 +156,7 @@ public class RegisterPasien extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
+                    progressBar.setVisibility(View.GONE);
                     String uid = auth.getCurrentUser().getUid();
                     Person user = new Pasien(namaLengkap, nik, "pasien",jk,tglLahir, alamat, noHp, email, password, null,uid);
 
@@ -192,12 +182,14 @@ public class RegisterPasien extends AppCompatActivity {
                                 }
                             });
                 } else {
+                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(getApplicationContext(), "Registrasi Gagal", Toast.LENGTH_LONG).show();
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
+                progressBar.setVisibility(View.GONE);
                 Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                 finish();
             }

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -15,13 +16,20 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Login extends AppCompatActivity {
 
     EditText emailEditText, passwordEditText;
-    String email, password;
+    String email, password, role;
+    ProgressBar progressBar;
     Button btnLogin;
     FirebaseAuth auth;
+    DatabaseReference dbF;
     FirebaseAuth.AuthStateListener listener;
 
     @Override
@@ -32,26 +40,43 @@ public class Login extends AppCompatActivity {
         emailEditText = findViewById(R.id.etLoginEmail);
         passwordEditText = findViewById(R.id.etLoginPassword);
         btnLogin = findViewById(R.id.btnLoginSubmit);
+        progressBar = findViewById(R.id.progressbar1);
+        progressBar.setVisibility(View.GONE);
         auth = FirebaseAuth.getInstance();
 
         listener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser userLogin = auth.getCurrentUser();
-//                if(userLogin.getEmail() == "admin@qlinikku.com"){
-//                    startActivity(new Intent(Login.this, AdminHome.class));
-//                    finish();
-//                }
-                if (userLogin != null && userLogin.isEmailVerified()){
-                    startActivity(new Intent(Login.this, PasienHome.class));
-                    finish();
+                FirebaseUser userLogin = firebaseAuth.getCurrentUser();
+                if(userLogin != null){
+                    dbF = FirebaseDatabase.getInstance().getReference().child("Users").child(userLogin.getUid());
+                    dbF.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            role = snapshot.child("role").getValue().toString();
+                            if (userLogin.isEmailVerified() && role.equals("pasien")){
+                                startActivity(new Intent(Login.this, PasienHome.class));
+                                finish();
+                            } else if(userLogin.isEmailVerified() && role.equals("admin")) {
+                                startActivity(new Intent(Login.this, AdminHome.class));
+                                finish();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
                 }
+
             }
         };
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
                 email = emailEditText.getText().toString().trim();
                 password = passwordEditText.getText().toString().trim();
 
@@ -81,11 +106,10 @@ public class Login extends AppCompatActivity {
 
     @Override
     protected void onStop() {
+        super.onStop();
         if(listener != null){
             auth.removeAuthStateListener(listener);
         }
-        super.onStop();
-
     }
 
     private void loginAkun(){
@@ -93,17 +117,22 @@ public class Login extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    if (auth.getCurrentUser().getEmail().trim() == "admin@qlinikku.com"){
-                        Toast.makeText(Login.this, "Login Admin Berhasil", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(Login.this, AdminHome.class));
-                    }
-                    else if(auth.getCurrentUser().isEmailVerified()){
+                    progressBar.setVisibility(View.GONE);
+                    if(auth.getCurrentUser().isEmailVerified()){
                         Toast.makeText(Login.this, "Login Berhasil", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(Login.this, PasienHome.class));
+                        if(role.equals("pasien")){
+                            startActivity(new Intent(Login.this, PasienHome.class));
+
+                        } else if(role.equals("admin")) {
+                            startActivity(new Intent(Login.this, AdminHome.class));
+
+                        }
                     } else {
+                        progressBar.setVisibility(View.GONE);
                         Toast.makeText(Login.this, "Email belum diverifikasi", Toast.LENGTH_SHORT).show();
                     }
                 } else {
+                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(Login.this, "Login Gagal", Toast.LENGTH_SHORT).show();
                 }
             }
