@@ -6,7 +6,7 @@ import java.util.List;
 public class Pasien extends Person{
     private List<String> prevAppointmentIDs, upcomingAppointmentIDs, seenDoctorIDs;
 
-    private Pasien(){
+    public Pasien(){
         this.prevAppointmentIDs = new ArrayList<String>();
         this.upcomingAppointmentIDs = new ArrayList<String>();
         this.seenDoctorIDs = new ArrayList<String>();

@@ -13,7 +13,12 @@
           "package_name": "com.whisnuys.qlinikku"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "103505803030-for5v44ufv8fjg18ban3gpsgff4e1ir1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBvxZVpq9krTXUc3DfSvUAvLxNk9AIbjtE"
@@ -21,7 +26,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "103505803030-en57snh0a4kvi9sm9toec8astp5s7ne0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

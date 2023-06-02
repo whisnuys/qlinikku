@@ -56,10 +56,8 @@ public class Login extends AppCompatActivity {
                             role = snapshot.child("role").getValue().toString();
                             if (userLogin.isEmailVerified() && role.equals("pasien")){
                                 startActivity(new Intent(Login.this, PasienHome.class));
-                                finish();
                             } else if(userLogin.isEmailVerified() && role.equals("admin")) {
                                 startActivity(new Intent(Login.this, AdminHome.class));
-                                finish();
                             }
                         }
 
@@ -77,8 +75,8 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
-                email = emailEditText.getText().toString().trim();
-                password = passwordEditText.getText().toString().trim();
+                email = emailEditText.getText().toString();
+                password = passwordEditText.getText().toString();
 
                 if (email.isEmpty()){
                     emailEditText.setError("Email tidak boleh kosong");
@@ -118,19 +116,35 @@ public class Login extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     progressBar.setVisibility(View.GONE);
-                    if(auth.getCurrentUser().isEmailVerified()){
-                        Toast.makeText(Login.this, "Login Berhasil", Toast.LENGTH_SHORT).show();
-                        if(role.equals("pasien")){
-                            startActivity(new Intent(Login.this, PasienHome.class));
+                    dbF = FirebaseDatabase.getInstance().getReference().child("Users").child(auth.getCurrentUser().getUid());
 
-                        } else if(role.equals("admin")) {
-                            startActivity(new Intent(Login.this, AdminHome.class));
+                    dbF.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            role = snapshot.child("role").getValue().toString();
+                            if (auth.getCurrentUser().isEmailVerified() && role.equals("pasien")){
+                                Toast.makeText(Login.this, "Login Berhasil", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(Login.this, PasienHome.class));
+                            } else if(auth.getCurrentUser().isEmailVerified() && role.equals("admin")) {
+                                Toast.makeText(Login.this, "Login Berhasil", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(Login.this, AdminHome.class));
+                            } else {
+                                Toast.makeText(Login.this, "Email belum diverifikasi", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
                         }
-                    } else {
-                        progressBar.setVisibility(View.GONE);
-                        Toast.makeText(Login.this, "Email belum diverifikasi", Toast.LENGTH_SHORT).show();
-                    }
+                    });
+//                    if(auth.getCurrentUser().isEmailVerified()){
+//                        Toast.makeText(Login.this, "Login Berhasil", Toast.LENGTH_SHORT).show();
+//                            startActivity(new Intent(Login.this, PasienHome.class));
+//                    } else {
+//                        progressBar.setVisibility(View.GONE);
+//                        Toast.makeText(Login.this, "Email belum diverifikasi", Toast.LENGTH_SHORT).show();
+//                    }
                 } else {
                     progressBar.setVisibility(View.GONE);
                     Toast.makeText(Login.this, "Login Gagal", Toast.LENGTH_SHORT).show();

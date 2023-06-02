@@ -158,7 +158,7 @@ public class RegisterPasien extends AppCompatActivity {
                 if(task.isSuccessful()){
                     progressBar.setVisibility(View.GONE);
                     String uid = auth.getCurrentUser().getUid();
-                    Person user = new Pasien(namaLengkap, nik, "pasien",jk,tglLahir, alamat, noHp, email, password, null,uid);
+                    Person user = new Pasien(namaLengkap, nik, "pasien",jk,tglLahir, alamat, noHp, email, password, "",uid);
 
                     FirebaseDatabase.getInstance().getReference("Users")
                             .child(uid)

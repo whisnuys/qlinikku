@@ -16,9 +16,13 @@
         android:theme="@style/Theme.Qlinikku"
         tools:targetApi="31">
         <activity
-            android:name=".AdminHome"
+            android:name=".EditProfile"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
             android:exported="false" />
+        <activity
+            android:name=".AdminHome"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity
             android:name=".PasienHome"
             android:exported="false"

@@ -31,5 +31,51 @@ public class AdminHome extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_home);
+
+        ImageButton imageButton = findViewById(R.id.avatarHomeAdmin);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DrawerLayout drawerLayout = findViewById(R.id.drawer_layout_admin);
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+
+
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+
+        DatabaseReference dbF = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+
+        NavigationView mNavigationView = findViewById(R.id.nav_view_admin);
+        TextView mName = mNavigationView.getHeaderView(0).findViewById(R.id.profil_nama_admin);
+        TextView mEmail = mNavigationView.getHeaderView(0).findViewById(R.id.profil_email_admin);
+        TextView namaHome = findViewById(R.id.namaHomeAdmin);
+
+        mNavigationView.getMenu().findItem(R.id.nav_logout_admin).setOnMenuItemClickListener(menuItem -> {
+            logout();
+            return true;
+        });
+
+        dbF.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                mName.setText(snapshot.child("namaLengkap").getValue().toString());
+                namaHome.setText(snapshot.child("namaLengkap").getValue().toString());
+                mEmail.setText(snapshot.child("email").getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void logout(){FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent(AdminHome.this, Login.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
     }
 }

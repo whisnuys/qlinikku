@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp"
+    tools:context=".EditProfile">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+                <ImageButton
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@drawable/back_arrow"
+                    android:onClick="backToHome"
+                    android:scaleType="fitCenter" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="Edit Profile"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="24sp" />
+
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                >
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/img_avatar"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/avatarhome"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:shapeAppearanceOverlay="@style/circular" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab_avatar"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:clickable="true"
+                    app:fabCustomSize="40dp"
+                    android:src="@drawable/baseline_edit_24"
+                    android:backgroundTint="#f1f1f1"
+                    app:rippleColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="@+id/img_avatar"
+                    app:layout_constraintEnd_toEndOf="@+id/img_avatar"
+                    />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <EditText
+                android:id="@+id/et_namalengkap"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:padding="15dp"
+                android:hint="Nama Lengkap"
+                android:background="@drawable/rounded_edittext2"
+                android:inputType="textPersonName"
+                android:textColorHint="#2b2b2b"/>
+
+            <EditText
+                android:id="@+id/et_nik"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:padding="15dp"
+                android:hint="NIK"
+                android:background="@drawable/rounded_edittext2"
+                android:inputType="text"
+                android:textColorHint="#2b2b2b"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="20dp">
+
+                <EditText
+                    android:id="@+id/et_tgllahir"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="10dp"
+                    android:hint="Tanggal Lahir"
+                    android:background="@drawable/rounded_edittext2"
+                    android:inputType="text"
+                    android:enabled="false"/>
+
+                <Button
+                    android:id="@+id/btn_tgllahir"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/icon_calendar"
+                    android:backgroundTint="#0069E9" />
+            </LinearLayout>
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:padding="15dp"
+                android:background="@drawable/rounded_spinner2"
+                android:spinnerMode="dropdown"
+                android:entries="@array/spinner_jk"
+                android:id="@+id/new_spinnerJK"/>
+
+            <EditText
+                android:id="@+id/et_alamat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:padding="15dp"
+                android:hint="Alamat"
+                android:background="@drawable/rounded_edittext2"
+                android:inputType="textMultiLine"
+                android:textColorHint="#2b2b2b"/>
+
+            <EditText
+                android:id="@+id/et_noHP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:padding="15dp"
+                android:hint="No HP"
+                android:background="@drawable/rounded_edittext2"
+                android:inputType="text"
+                android:textColorHint="#2b2b2b"/>
+
+            <EditText
+                android:id="@+id/et_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:padding="15dp"
+                android:hint="Email"
+                android:enabled="false"
+                android:background="@drawable/rounded_edittext2"
+                android:inputType="textEmailAddress"/>
+            <EditText
+                android:id="@+id/et_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:padding="15dp"
+                android:hint="Password"
+                android:enabled="false"
+                android:background="@drawable/rounded_edittext2"
+                android:inputType="textPassword"/>
+            <EditText
+                android:id="@+id/et_role"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:padding="15dp"
+                android:hint="Role"
+                android:enabled="false"
+                android:background="@drawable/rounded_edittext2"
+                android:inputType="text"/>
+
+            <ProgressBar
+                android:id="@+id/progressbar_editprofile"
+                android:layout_below="@+id/btnLoginSubmit"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                style="@style/Widget.AppCompat.ProgressBar"/>
+
+            <Button
+                android:id="@+id/btn_editprofile"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="20dp"
+                android:onClick="onClickEditProfile"
+                android:text="Simpan"
+                android:textSize="16sp"
+                android:textColor="#ffffff"
+                android:textStyle="bold"
+                android:backgroundTint="#006EE9"
+                android:elevation="0dp"
+                />
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

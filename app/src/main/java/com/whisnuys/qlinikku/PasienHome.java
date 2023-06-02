@@ -1,5 +1,7 @@
 package com.whisnuys.qlinikku;
 
+import static android.text.TextUtils.isEmpty;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -12,9 +14,11 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,7 +37,7 @@ public class PasienHome extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pasien_home);
 
-        ImageButton imageButton = findViewById(R.id.avatarHome);
+        ShapeableImageView imageButton = findViewById(R.id.avatar_img);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,10 +55,16 @@ public class PasienHome extends AppCompatActivity {
         NavigationView mNavigationView = findViewById(R.id.nav_view);
         TextView mName = mNavigationView.getHeaderView(0).findViewById(R.id.profil_nama);
         TextView mEmail = mNavigationView.getHeaderView(0).findViewById(R.id.profil_email);
+        ShapeableImageView mAvatarNav = mNavigationView.getHeaderView(0).findViewById(R.id.avatar_img_nav);
+        ShapeableImageView mAvatar = findViewById(R.id.avatar_img);
         TextView namaHome = findViewById(R.id.namaHome);
 
         mNavigationView.getMenu().findItem(R.id.nav_logout).setOnMenuItemClickListener(menuItem -> {
             logout();
+            return true;
+        });
+        mNavigationView.getMenu().findItem(R.id.nav_profile).setOnMenuItemClickListener(menuItem -> {
+            startActivity(new Intent(this, EditProfile.class));
             return true;
         });
 
@@ -64,6 +74,18 @@ public class PasienHome extends AppCompatActivity {
                 mName.setText(snapshot.child("namaLengkap").getValue().toString());
                 namaHome.setText(snapshot.child("namaLengkap").getValue().toString());
                 mEmail.setText(snapshot.child("email").getValue().toString());
+                if (isEmpty(snapshot.child("gambar").getValue().toString())){
+                    mAvatar.setImageResource(R.drawable.avatarhome);
+                    mAvatarNav.setImageResource(R.drawable.avatarhome);
+                } else {
+                    Glide.with(PasienHome.this)
+                            .load(snapshot.child("gambar").getValue().toString().trim())
+                            .into(mAvatar);
+                    Glide.with(PasienHome.this)
+                            .load(snapshot.child("gambar").getValue().toString().trim())
+                            .into(mAvatarNav);
+                }
+
             }
 
             @Override
@@ -81,11 +103,11 @@ public class PasienHome extends AppCompatActivity {
         slideModels.add(new SlideModel(R.drawable.image_slider1, ScaleTypes.FIT));
         imageSliderHome.setImageList(slideModels,ScaleTypes.FIT);
     }
-    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    private void logout(){
-        firebaseAuth.signOut();
 
+    private void logout(){FirebaseAuth.getInstance().signOut();
         Intent intent = new Intent(PasienHome.this, Login.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+        finish();
     }
 }
