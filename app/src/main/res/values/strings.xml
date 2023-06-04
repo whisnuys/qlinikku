@@ -31,4 +31,14 @@
 
     <string name="menu_logout">Logout</string>
     <string name="EditProfile">Edit Profile</string>
+
+    <string-array name="SelectSpesialis">
+        <item>Umum</item>
+        <item>Penyakit Dalam</item>
+        <item>Saraf</item>
+        <item>Kandungan</item>
+        <item>Kulit dan Kelamin</item>
+        <item>THT</item>
+        <item>Mata</item>
+    </string-array>
 </resources>

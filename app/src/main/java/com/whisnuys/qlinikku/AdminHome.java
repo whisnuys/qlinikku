@@ -2,6 +2,7 @@ package com.whisnuys.qlinikku;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -33,6 +34,14 @@ public class AdminHome extends AppCompatActivity {
         setContentView(R.layout.activity_admin_home);
 
         ImageButton imageButton = findViewById(R.id.avatarHomeAdmin);
+        CardView cardViewTambahDokter = findViewById(R.id.cardViewDTambahDokter);
+        cardViewTambahDokter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(AdminHome.this, TambahDokter.class));
+                finish();
+            }
+        });
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -71,9 +71,11 @@
                 android:layout_gravity="center_horizontal">
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/cardViewDTambahDokter"
                         android:layout_width="170dp"
                         android:layout_height="170dp"
                         android:layout_marginEnd="8dp"
+                        android:clickable="true"
                         app:cardCornerRadius="20dp">
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -112,12 +114,12 @@
                             <ImageView
                                 android:layout_width="65dp"
                                 android:layout_height="65dp"
-                                android:src="@drawable/icon_appointment"/>
+                                android:src="@drawable/icon_doctor"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Appointment"
+                                android:text="Data Dokter"
                                 android:textStyle="bold"
                                 android:textSize="20sp"
                                 android:layout_marginTop="20dp"

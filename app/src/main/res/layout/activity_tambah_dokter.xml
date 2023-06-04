@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp"
+    tools:context=".TambahDokter">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+                <ImageButton
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@drawable/back_arrow"
+                    android:onClick="backToHome"
+                    android:scaleType="fitCenter" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="Tambah Dokter"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="24sp" />
+
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                >
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/img_avatar_dokter"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/icon_doctor"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:shapeAppearanceOverlay="@style/circular" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab_avatar_dokter"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:clickable="true"
+                    app:fabCustomSize="40dp"
+                    android:src="@drawable/baseline_edit_24"
+                    android:backgroundTint="#f1f1f1"
+                    app:rippleColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="@+id/img_avatar_dokter"
+                    app:layout_constraintEnd_toEndOf="@+id/img_avatar_dokter"
+                    />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <EditText
+                android:id="@+id/et_namalengkap_dokter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:padding="15dp"
+                android:hint="Nama Lengkap"
+                android:background="@drawable/rounded_edittext2"
+                android:inputType="textPersonName"
+                android:textColorHint="#2b2b2b"/>
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/rounded_spinner2"
+                android:spinnerMode="dropdown"
+                android:entries="@array/spinner_jk"
+                android:id="@+id/spinnerJK_dokter"/>
+
+            <EditText
+                android:id="@+id/et_noHP_dokter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:padding="15dp"
+                android:hint="No HP"
+                android:background="@drawable/rounded_edittext2"
+                android:inputType="text"
+                android:textColorHint="#2b2b2b"/>
+
+<!--            <Button-->
+<!--                android:id="@+id/btn_pilih_spesialis"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:padding="15dp"-->
+<!--                android:background="@drawable/rounded_edittext2"-->
+<!--                android:text="Pilih Spesialis"-->
+<!--                android:textAllCaps="false"-->
+<!--                />-->
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/rounded_spinner2"
+                android:spinnerMode="dropdown"
+                android:entries="@array/SelectSpesialis"
+                android:id="@+id/spinnerSpesialis"/>
+
+            <ProgressBar
+                android:id="@+id/progressbar_dokter"
+                android:layout_below="@+id/btnLoginSubmit"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                style="@style/Widget.AppCompat.ProgressBar"/>
+
+            <Button
+                android:id="@+id/btn_tambah_dokter"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="20dp"
+                android:text="Tambah"
+                android:textSize="16sp"
+                android:textColor="#ffffff"
+                android:textStyle="bold"
+                android:backgroundTint="#006EE9"
+                android:elevation="0dp"
+                />
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
