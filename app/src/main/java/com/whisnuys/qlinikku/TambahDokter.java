@@ -140,7 +140,7 @@ public class TambahDokter extends AppCompatActivity {
                     @Override
                     public void onSuccess(Uri uri) {
                         final String pushId = FirebaseDatabase.getInstance().getReference().push().getKey();
-                        Dokter dokter = new Dokter(namaLengkap, jenisKelamin, noHP, spesialis, "dokter",uri.toString().trim(), pushId);
+                        Dokter dokter = new Dokter(namaLengkap, jenisKelamin, noHP, spesialis,uri.toString().trim(), pushId);
                         progressBar.setVisibility(View.GONE);
                         etNamaLengkap.setText("");
                         etNoHP.setText("");

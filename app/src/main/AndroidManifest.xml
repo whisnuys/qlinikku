@@ -16,9 +16,13 @@
         android:theme="@style/Theme.Qlinikku"
         tools:targetApi="31">
         <activity
-            android:name=".TambahDokter"
+            android:name=".ListDataDokter"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
             android:exported="false" />
+        <activity
+            android:name=".TambahDokter"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity
             android:name=".EditProfile"
             android:exported="false"
