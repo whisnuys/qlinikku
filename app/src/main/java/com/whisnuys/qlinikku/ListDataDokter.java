@@ -50,35 +50,34 @@ public class ListDataDokter extends AppCompatActivity {
         setContentView(R.layout.activity_list_data_dokter);
         recyclerView = findViewById(R.id.datalistDokter);
 
-        GetData();
+        GetData("");
 
-//        searchView = findViewById(R.id.etSearchDokter);
-//        searchView.addTextChangedListener(new TextWatcher() {
-//        @Override
-//        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//        }
-//
-//        @Override
-//        public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//        }
-//
-//        @Override
-//        public void afterTextChanged(Editable s) {
-//            if(s.toString().isEmpty()){
-//                GetData(s.toString());
-//            }
-////                else {
-////                    adapter.getFilter().filter(s);
-////                }
-//        }
-//    });
+        searchView = findViewById(R.id.etSearchDokter);
+        searchView.addTextChangedListener(new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            if(s.toString().isEmpty()){
+                GetData(s.toString());
+            } else {
+                    adapter.getFilter().filter(s);
+                }
+        }
+    });
 
     MyRecycleView();
 }
 
-    private void GetData(){
+    private void GetData(String data){
         reference = FirebaseDatabase.getInstance().getReference();
         reference.child("Users").addValueEventListener(new ValueEventListener() {
             @Override

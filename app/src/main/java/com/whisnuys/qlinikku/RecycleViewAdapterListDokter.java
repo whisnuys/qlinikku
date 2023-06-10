@@ -28,49 +28,49 @@ import com.whisnuys.qlinikku.Models.PersonDokter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecycleViewAdapterListDokter extends RecyclerView.Adapter<RecycleViewAdapterListDokter.ViewHolder> {
+public class RecycleViewAdapterListDokter extends RecyclerView.Adapter<RecycleViewAdapterListDokter.ViewHolder> implements Filterable{
     ArrayList<PersonDokter> listDokter;
     ListDataDokter context;
     ArrayList<PersonDokter> listDokterSearch;
 
     //  Filter Data
-//    Filter setSearch = new Filter() {
-//        @Override
-//        protected FilterResults performFiltering(CharSequence constraint) {
-//            ArrayList<PersonDokter> filterDokter = new ArrayList<>();
-//            if(constraint == null || constraint.length() == 0){
-//                filterDokter.addAll(listDokterSearch);
-//            } else {
-//                String filterPattern = constraint.toString().toLowerCase().trim();
-//                for (PersonDokter item : listDokterSearch){
-//                    if(item.getNamaLengkap().toLowerCase().contains(filterPattern) || item.getSpesialis().contains(filterPattern)){
-//                        filterDokter.add(item);
-//                    }
-//                }
-//            }
-//            FilterResults results = new FilterResults();
-//            results.values = filterDokter;
-//            return results;
-//        }
-//
-//        @Override
-//        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-//            listDokter.clear();
-//            listDokter.addAll((List) filterResults.values);
-//            notifyDataSetChanged();
-//        }
-//    };
+    Filter setSearch = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            ArrayList<PersonDokter> filterDokter = new ArrayList<>();
+            if(constraint == null || constraint.length() == 0){
+                filterDokter.addAll(listDokterSearch);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                for (PersonDokter item : listDokterSearch){
+                    if(item.getSpesialis().toLowerCase().trim().contains(filterPattern)){
+                        filterDokter.add(item);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filterDokter;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            listDokter.clear();
+            listDokter.addAll((List) filterResults.values);
+            notifyDataSetChanged();
+        }
+    };
 
     public RecycleViewAdapterListDokter(ArrayList<PersonDokter> listDokter, ListDataDokter context){
         this.listDokter = listDokter;
         this.context = context;
-//        this.listDokterSearch = listDokter;
+        this.listDokterSearch = listDokter;
     }
 
-//    @Override
-//    public Filter getFilter() {
-//        return setSearch;
-//    }
+    @Override
+    public Filter getFilter() {
+        return setSearch;
+    }
 
     @NonNull
     @Override
