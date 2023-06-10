@@ -107,6 +107,8 @@ public class ListDataDokter extends AppCompatActivity {
         });
     }
 
+
+
     private void MyRecycleView(){
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);

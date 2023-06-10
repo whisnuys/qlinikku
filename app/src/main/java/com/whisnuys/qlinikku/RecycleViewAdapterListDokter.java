@@ -15,6 +15,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -170,6 +171,22 @@ public class RecycleViewAdapterListDokter extends RecyclerView.Adapter<RecycleVi
                 alert.create();
                 alert.show();
                 return true;
+            }
+        });
+
+        holder.listItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context.getApplicationContext(), "Selected Dr. " + listDokter.get(position).getNamaLengkap(), Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(view.getContext(), DetailDokter.class);
+                intent.putExtra("dokterID", listDokter.get(position).getUid());
+                intent.putExtra("dataNamaDokter", listDokter.get(position).getNamaLengkap());
+                intent.putExtra("dataJkDokter", listDokter.get(position).getJenisKelamin());
+                intent.putExtra("dataNoHpDokter", listDokter.get(position).getNoTelepon());
+                intent.putExtra("dataSpesialisDokter", listDokter.get(position).getSpesialis());
+                intent.putExtra("dataGambarDokter", listDokter.get(position).getGambar());
+                context.startActivity(intent);
             }
         });
     }
