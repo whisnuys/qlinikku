@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +21,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.imageview.ShapeableImageView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.whisnuys.qlinikku.Models.Appointment;
 import com.whisnuys.qlinikku.Models.Dokter;
 import com.whisnuys.qlinikku.Models.PersonDokter;
 
@@ -131,9 +136,25 @@ public class RecycleViewAdapterListDokter extends RecyclerView.Adapter<RecycleVi
                                 alert.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
-                                        DatabaseReference mPostReference = FirebaseDatabase.getInstance().getReference().child("Users")
-                                                .child(listDokter.get(position).getUid());
-                                        mPostReference.removeValue();
+                                        DatabaseReference doctorRef = FirebaseDatabase.getInstance().getReference("Users").child(listDokter.get(position).getUid());
+                                        doctorRef.removeValue();
+                                        FirebaseDatabase.getInstance().getReference("Appointments").addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                for(DataSnapshot apptChild : snapshot.getChildren()){
+                                                    Appointment appt = apptChild.getValue(Appointment.class);
+                                                    if(appt.getDokterID().equals(listDokter.get(position).getUid())){
+                                                        apptChild.getRef().removeValue();
+                                                    }
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                            }
+                                        });
+
                                     }
                                 }).setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
                                     @Override
