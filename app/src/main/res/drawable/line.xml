@@ -9,6 +9,6 @@
     <size
         android:height="2dp" />
     <solid
-        android:color="#202020" />
+        android:color="#eee" />
 
 </shape>
