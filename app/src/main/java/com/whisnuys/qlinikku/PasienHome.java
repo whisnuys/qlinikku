@@ -4,6 +4,7 @@ import static android.text.TextUtils.isEmpty;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.Navigation;
@@ -43,6 +44,25 @@ public class PasienHome extends AppCompatActivity {
             public void onClick(View view) {
                 DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
                 drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+
+
+        CardView cardViewPilihDokter = findViewById(R.id.cardViewPilihDokter);
+        cardViewPilihDokter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(PasienHome.this, PilihDokter.class));
+                finish();
+            }
+        });
+
+        CardView cardViewReservasi = findViewById(R.id.cardViewReservasi);
+        cardViewReservasi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(PasienHome.this, ReservasiBerlangsung.class));
+                finish();
             }
         });
 

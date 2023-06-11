@@ -14,27 +14,22 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.imageview.ShapeableImageView;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.whisnuys.qlinikku.Models.Dokter;
-import com.whisnuys.qlinikku.Models.PersonDokter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecycleViewAdapterListDokter extends RecyclerView.Adapter<RecycleViewAdapterListDokter.ViewHolder> implements Filterable{
+public class PilihDokterAdapter extends RecyclerView.Adapter<PilihDokterAdapter.ViewHolder> implements Filterable {
     ArrayList<Dokter> listDokter;
-    ListDataDokter context;
+    PilihDokter context;
     ArrayList<Dokter> listDokterSearch;
 
     //  Filter Data
@@ -65,7 +60,7 @@ public class RecycleViewAdapterListDokter extends RecyclerView.Adapter<RecycleVi
         }
     };
 
-    public RecycleViewAdapterListDokter(ArrayList<Dokter> listDokter, ListDataDokter context){
+    public PilihDokterAdapter(ArrayList<Dokter> listDokter, PilihDokter context){
         this.listDokter = listDokter;
         this.context = context;
         this.listDokterSearch = listDokter;
@@ -78,14 +73,14 @@ public class RecycleViewAdapterListDokter extends RecyclerView.Adapter<RecycleVi
 
     @NonNull
     @Override
-    public RecycleViewAdapterListDokter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public PilihDokterAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_list_dokter_design, parent, false);
         return new ViewHolder(v);
     }
 
 
     @Override
-    public void onBindViewHolder(@NonNull RecycleViewAdapterListDokter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
+    public void onBindViewHolder(@NonNull PilihDokterAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         final String NamaLengkap = listDokter.get(position).getNamaLengkap();
         final String Jeniskelamin = listDokter.get(position).getJenisKelamin();
         final String NoHP = listDokter.get(position).getNoTelepon();
@@ -103,62 +98,19 @@ public class RecycleViewAdapterListDokter extends RecyclerView.Adapter<RecycleVi
             Glide.with(holder.itemView.getContext()).load(GambarDokter.trim()).into(holder.gambarDokter);
         }
 
-        holder.listItem.setOnLongClickListener(new View.OnLongClickListener(){
+        holder.listItem.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(final View v){
-                final String[] action = {"Update", "Update Jadwal","Delete"};
-                AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
-                alert.setTitle("Apa yang akan anda pilih?");
-                alert.setItems(action, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        switch (i){
-                            case 0:
-                                Bundle bundle = new Bundle();
-                                bundle.putString("dataNamaDokter", listDokter.get(position).getNamaLengkap());
-                                bundle.putString("dataJkDokter", listDokter.get(position).getJenisKelamin());
-                                bundle.putString("dataNoHpDokter", listDokter.get(position).getNoTelepon());
-                                bundle.putString("dataSpesialisDokter", listDokter.get(position).getSpesialis());
-                                bundle.putString("dataGambarDokter", listDokter.get(position).getGambar());
-                                bundle.putString("getPrimaryKey", listDokter.get(position).getUid());
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), DetailPilihDokter.class);
 
+                intent.putExtra("dokterNama", listDokter.get(position).getNamaLengkap());
+                intent.putExtra("dokterJK", listDokter.get(position).getJenisKelamin());
+                intent.putExtra("dokterSpesialis", listDokter.get(position).getSpesialis());
+                intent.putExtra("dokterNoHp", listDokter.get(position).getNoTelepon());
+                intent.putExtra("dokterGambar", listDokter.get(position).getGambar());
+                intent.putExtra("dokterID", listDokter.get(position).getUid());
 
-
-                                Intent intent = new Intent(v.getContext(), AdminHome.class);
-                                intent.putExtras(bundle);
-                                context.startActivity(intent);
-                                break;
-
-                            case 1:
-                                Intent intentd = new Intent(v.getContext(), TambahJadwalDokter.class);
-                                intentd.putExtra("dokterID", listDokter.get(position).getUid());
-                                context.startActivity(intentd);
-                                break;
-
-                            case 2:
-                                AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
-                                alert.setTitle("Apakah anda yakin menghapus data ini?");
-                                alert.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        DatabaseReference doctorRef = FirebaseDatabase.getInstance().getReference("Dokter").child(listDokter.get(position).getUid());
-                                        doctorRef.removeValue();
-
-                                    }
-                                }).setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        return;
-                                    }
-                                });
-                                alert.create();
-                                alert.show();
-                        }
-                    }
-                });
-                alert.create();
-                alert.show();
-                return true;
+                context.startActivity(intent);
             }
         });
 
