@@ -13,11 +13,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -26,22 +22,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.whisnuys.qlinikku.Models.Dokter;
-import com.whisnuys.qlinikku.Models.PersonDokter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ListDataDokter extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    RecycleViewAdapterListDokter adapter;
+    ListDataDokterAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-
     private DatabaseReference reference;
     private ArrayList<Dokter> dataDokter;
-
-//    private FloatingActionButton fab, home;
-
     private EditText searchView;
 
     @Override
@@ -93,7 +83,7 @@ public class ListDataDokter extends AppCompatActivity {
 
                 }
 
-                adapter = new RecycleViewAdapterListDokter(dataDokter, ListDataDokter.this);
+                adapter = new ListDataDokterAdapter(dataDokter, ListDataDokter.this);
                 recyclerView.setAdapter(adapter);
             }
 

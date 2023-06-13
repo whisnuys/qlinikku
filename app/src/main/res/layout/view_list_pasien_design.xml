@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/list_item_pasien"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:layout_marginRight="15dp"
+    android:layout_marginLeft="15dp"
+    android:layout_marginBottom="20dp"
+    android:background="#F3F3F3"
+    android:paddingTop="20dp"
+    android:paddingRight="25dp"
+    android:paddingLeft="25dp"
+    android:paddingBottom="20dp"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/gambar_pasien"
+        android:layout_width="100dp"
+        android:clickable="true"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/avatarhome"
+        android:scaleType="centerCrop"
+        app:shapeAppearanceOverlay="@style/circular" />
+
+    <LinearLayout
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="NIK"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/nikPasien"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="NIK"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_marginTop="7dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="Nama"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/namaPasien"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nama"
+                android:textColor="@color/black"
+                android:layout_marginTop="7dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="Tanggal Lahir"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/tglLahirPasien"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tanggal Lahir"
+                android:textColor="@color/black"
+                android:layout_marginTop="7dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="Jenis Kelamin"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/jkPasien"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Jenis Kelamin"
+                android:textColor="@color/black"
+                android:layout_marginTop="7dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="No Hp"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/noHpPasien"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No Hp"
+                android:textColor="@color/black"
+                android:layout_marginTop="7dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="Alamat"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/alamatPasien"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Alamat"
+                android:textColor="@color/black"
+                android:layout_marginTop="7dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="Email"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/emailPasien"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Email"
+                android:textColor="@color/black"
+                android:layout_marginTop="7dp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

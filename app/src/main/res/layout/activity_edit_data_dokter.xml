@@ -7,7 +7,7 @@
     android:background="@color/white"
     android:paddingStart="20dp"
     android:paddingEnd="20dp"
-    tools:context=".TambahDokter">
+    tools:context=".EditDataDokter">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -28,14 +28,14 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:background="@drawable/back_arrow"
-                    android:onClick="tambahDokterBackToHome"
+                    android:onClick="editDataBackToList"
                     android:scaleType="fitCenter" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:text="Tambah Dokter"
+                    android:text="Edit Data Dokter"
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     android:textSize="24sp" />
@@ -49,7 +49,7 @@
                 >
 
                 <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/img_avatar_dokter"
+                    android:id="@+id/new_img_avatar_dokter"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_gravity="center_horizontal"
@@ -70,8 +70,8 @@
                     android:src="@drawable/baseline_edit_24"
                     android:backgroundTint="#f1f1f1"
                     app:rippleColor="@color/white"
-                    app:layout_constraintBottom_toBottomOf="@+id/img_avatar_dokter"
-                    app:layout_constraintEnd_toEndOf="@+id/img_avatar_dokter"
+                    app:layout_constraintBottom_toBottomOf="@+id/new_img_avatar_dokter"
+                    app:layout_constraintEnd_toEndOf="@+id/new_img_avatar_dokter"
                     />
 
 
@@ -96,10 +96,10 @@
                 android:background="@drawable/rounded_spinner2"
                 android:spinnerMode="dropdown"
                 android:entries="@array/spinner_jk"
-                android:id="@+id/spinnerJK_dokter"/>
+                android:id="@+id/new_spinnerJK_dokter"/>
 
             <EditText
-                android:id="@+id/et_noHP_dokter"
+                android:id="@+id/new_et_noHP_dokter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -109,16 +109,16 @@
                 android:inputType="text"
                 android:textColorHint="#2b2b2b"/>
 
-<!--            <Button-->
-<!--                android:id="@+id/btn_pilih_spesialis"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="20dp"-->
-<!--                android:padding="15dp"-->
-<!--                android:background="@drawable/rounded_edittext2"-->
-<!--                android:text="Pilih Spesialis"-->
-<!--                android:textAllCaps="false"-->
-<!--                />-->
+            <!--            <Button-->
+            <!--                android:id="@+id/btn_pilih_spesialis"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="20dp"-->
+            <!--                android:padding="15dp"-->
+            <!--                android:background="@drawable/rounded_edittext2"-->
+            <!--                android:text="Pilih Spesialis"-->
+            <!--                android:textAllCaps="false"-->
+            <!--                />-->
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -126,10 +126,10 @@
                 android:background="@drawable/rounded_spinner2"
                 android:spinnerMode="dropdown"
                 android:entries="@array/SelectSpesialis"
-                android:id="@+id/spinnerSpesialis"/>
+                android:id="@+id/new_spinnerSpesialis"/>
 
             <ProgressBar
-                android:id="@+id/progressbar_dokter"
+                android:id="@+id/new_progressbar_dokter"
                 android:layout_below="@+id/btnLoginSubmit"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
@@ -138,11 +138,11 @@
                 style="@style/Widget.AppCompat.ProgressBar"/>
 
             <Button
-                android:id="@+id/btn_tambah_dokter"
+                android:id="@+id/btn_update_dokter"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="20dp"
-                android:text="Tambah"
+                android:text="Simpan"
                 android:textSize="16sp"
                 android:textColor="#ffffff"
                 android:textStyle="bold"

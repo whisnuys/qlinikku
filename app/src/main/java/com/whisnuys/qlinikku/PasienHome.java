@@ -66,6 +66,15 @@ public class PasienHome extends AppCompatActivity {
             }
         });
 
+        CardView cardViewRiwayat = findViewById(R.id.cardViewRiwayat);
+        cardViewRiwayat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(PasienHome.this, RiwayatReservasiPasien.class));
+                finish();
+            }
+        });
+
 
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();

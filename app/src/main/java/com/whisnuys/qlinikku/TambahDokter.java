@@ -186,6 +186,8 @@ public class TambahDokter extends AppCompatActivity {
                 break;
         }
     }
-
+    public void tambahDokterBackToHome(View view) {
+        startActivity(new Intent(this, AdminHome.class));
+    }
 
 }

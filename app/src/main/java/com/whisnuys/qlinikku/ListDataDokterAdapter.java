@@ -27,12 +27,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.whisnuys.qlinikku.Models.Dokter;
-import com.whisnuys.qlinikku.Models.PersonDokter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecycleViewAdapterListDokter extends RecyclerView.Adapter<RecycleViewAdapterListDokter.ViewHolder> implements Filterable{
+public class ListDataDokterAdapter extends RecyclerView.Adapter<ListDataDokterAdapter.ViewHolder> implements Filterable{
     ArrayList<Dokter> listDokter;
     ListDataDokter context;
     ArrayList<Dokter> listDokterSearch;
@@ -65,7 +64,7 @@ public class RecycleViewAdapterListDokter extends RecyclerView.Adapter<RecycleVi
         }
     };
 
-    public RecycleViewAdapterListDokter(ArrayList<Dokter> listDokter, ListDataDokter context){
+    public ListDataDokterAdapter(ArrayList<Dokter> listDokter, ListDataDokter context){
         this.listDokter = listDokter;
         this.context = context;
         this.listDokterSearch = listDokter;
@@ -78,14 +77,14 @@ public class RecycleViewAdapterListDokter extends RecyclerView.Adapter<RecycleVi
 
     @NonNull
     @Override
-    public RecycleViewAdapterListDokter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ListDataDokterAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_list_dokter_design, parent, false);
         return new ViewHolder(v);
     }
 
 
     @Override
-    public void onBindViewHolder(@NonNull RecycleViewAdapterListDokter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
+    public void onBindViewHolder(@NonNull ListDataDokterAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         final String NamaLengkap = listDokter.get(position).getNamaLengkap();
         final String Jeniskelamin = listDokter.get(position).getJenisKelamin();
         final String NoHP = listDokter.get(position).getNoTelepon();
@@ -114,19 +113,33 @@ public class RecycleViewAdapterListDokter extends RecyclerView.Adapter<RecycleVi
                     public void onClick(DialogInterface dialogInterface, int i) {
                         switch (i){
                             case 0:
-                                Bundle bundle = new Bundle();
-                                bundle.putString("dataNamaDokter", listDokter.get(position).getNamaLengkap());
-                                bundle.putString("dataJkDokter", listDokter.get(position).getJenisKelamin());
-                                bundle.putString("dataNoHpDokter", listDokter.get(position).getNoTelepon());
-                                bundle.putString("dataSpesialisDokter", listDokter.get(position).getSpesialis());
-                                bundle.putString("dataGambarDokter", listDokter.get(position).getGambar());
-                                bundle.putString("getPrimaryKey", listDokter.get(position).getUid());
+                                DatabaseReference checkApp = FirebaseDatabase.getInstance().getReference("Dokter").child(listDokter.get(position).getUid()).child("my_app");
+                                    checkApp.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if (snapshot.exists()){
+                                                Toast.makeText(v.getContext(), "Dokter ini sedang memiliki jadwal yang aktif", Toast.LENGTH_LONG).show();
+                                            } else {
+                                                Toast.makeText(v.getContext(), "Setelah update data dokter diwajibkan mengisi jadwal dokter kembali", Toast.LENGTH_LONG).show();
+                                                Bundle bundle = new Bundle();
+                                                bundle.putString("dataNamaDokter", listDokter.get(position).getNamaLengkap());
+                                                bundle.putString("dataJkDokter", listDokter.get(position).getJenisKelamin());
+                                                bundle.putString("dataNoHpDokter", listDokter.get(position).getNoTelepon());
+                                                bundle.putString("dataSpesialisDokter", listDokter.get(position).getSpesialis());
+                                                bundle.putString("dataGambarDokter", listDokter.get(position).getGambar());
+                                                bundle.putString("dataDokterID", listDokter.get(position).getUid());
+                                                Intent intent = new Intent(v.getContext(), EditDataDokter.class);
+                                                intent.putExtras(bundle);
+                                                context.startActivity(intent);
+                                            }
+                                        }
 
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
 
+                                        }
+                                    });
 
-                                Intent intent = new Intent(v.getContext(), AdminHome.class);
-                                intent.putExtras(bundle);
-                                context.startActivity(intent);
                                 break;
 
                             case 1:

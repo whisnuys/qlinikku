@@ -55,6 +55,16 @@ public class AdminHome extends AppCompatActivity {
                 finish();
             }
         });
+
+        CardView cardViewDataPasien = findViewById(R.id.cardViewDataPasien);
+        cardViewDataPasien.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                startActivity(new Intent(AdminHome.this, ListDataPasien.class));
+                finish();
+            }
+        });
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
