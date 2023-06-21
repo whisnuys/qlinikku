@@ -115,9 +115,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="Pilih Jadwal Temu"
+                android:text="Pilih Jadwal Kunjungan"
                 android:textStyle="bold"
                 android:textSize="18sp" />
+
+            <com.harrywhewell.scrolldatepicker.DayScrollDatePicker
+                android:id="@+id/day_date_picker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:showTitle="false"
+                app:showFullDate="false"
+                app:selectedColor="@color/primary"
+                app:selectedTextColor="@color/black" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -131,7 +140,6 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="110dp"
                     android:id="@+id/dr_app_place2" />
-
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -157,7 +165,7 @@
                             android:id="@+id/remarks"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
-                            android:hint="Add Remarks"
+                            android:hint="Tambah Catatan"
                             android:textSize="15sp"
                             android:background="@drawable/rectangle_outline"
                             android:paddingLeft="10dp" />

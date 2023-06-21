@@ -42,7 +42,7 @@ public class AdminHome extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(AdminHome.this, TambahDokter.class));
-                finish();
+
             }
         });
 
@@ -52,7 +52,7 @@ public class AdminHome extends AppCompatActivity {
             public void onClick(View view) {
 
                 startActivity(new Intent(AdminHome.this, ListDataDokter.class));
-                finish();
+
             }
         });
 
@@ -62,7 +62,7 @@ public class AdminHome extends AppCompatActivity {
             public void onClick(View view) {
 
                 startActivity(new Intent(AdminHome.this, ListDataPasien.class));
-                finish();
+
             }
         });
         imageButton.setOnClickListener(new View.OnClickListener() {

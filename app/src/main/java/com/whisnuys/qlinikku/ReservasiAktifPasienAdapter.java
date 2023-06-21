@@ -2,7 +2,11 @@ package com.whisnuys.qlinikku;
 
 import static android.text.TextUtils.isEmpty;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,10 +46,10 @@ public class ReservasiAktifPasienAdapter extends FirebaseRecyclerAdapter<Reserva
         holder.app_dr_name.setText("Dr. " + model.getName());
         holder.app_dr_time.setText(model.getTime());
 
-        if(isEmpty(model.getImage())){
+        if(isEmpty(model.getGambar())){
             holder.app_dr_image.setImageResource(R.drawable.avatarhome);
         } else {
-            Glide.with(holder.itemView.getContext()).load(model.getImage().trim()).into(holder.app_dr_image);
+            Glide.with(holder.itemView.getContext()).load(model.getGambar().trim()).into(holder.app_dr_image);
         }
 
         ref1 = FirebaseDatabase.getInstance().getReference("Dokter");
@@ -66,7 +70,8 @@ public class ReservasiAktifPasienAdapter extends FirebaseRecyclerAdapter<Reserva
                             for(DataSnapshot ds : snapshot.getChildren()) {
                                 if(ds.child("namaLengkap").getValue().equals(model.getName())) {
                                     DatabaseReference ref = ref1.child(ds.getKey());
-                                    ref.child("slots").child(model.getTime()).setValue("Available");
+                                    Log.e("tanggal", model.getTanggal());
+                                    ref.child("slots").child(model.getTanggal()).child(model.getTime()).setValue("Available");
                                     ref.child("my_app").child(model.getTime()).removeValue();
                                 }
                             }
@@ -79,7 +84,8 @@ public class ReservasiAktifPasienAdapter extends FirebaseRecyclerAdapter<Reserva
                     });
                     DatabaseReference ref3 = FirebaseDatabase.getInstance().getReference("Users").child(pasienID).child("riwayat");
                     ref3.child(model.getName() + model.getTime()).setValue(model);
-                    ref2.child("active_app").child(model.getName() + model.getTime()).removeValue();
+                    ref2.child("active_app").child(model.getTanggal() + model.getTime()).removeValue();
+                    context.startActivity(new Intent(context, PasienHome.class));
                 });
 
                 dialog.setNegativeButton("Batal", (dialog12, which) -> {

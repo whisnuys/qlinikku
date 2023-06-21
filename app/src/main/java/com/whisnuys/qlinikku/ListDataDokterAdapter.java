@@ -149,23 +149,37 @@ public class ListDataDokterAdapter extends RecyclerView.Adapter<ListDataDokterAd
                                 break;
 
                             case 2:
-                                AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
-                                alert.setTitle("Apakah anda yakin menghapus data ini?");
-                                alert.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                                FirebaseDatabase.getInstance().getReference("Dokter").child(listDokter.get(position).getUid()).child("my_app").addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        DatabaseReference doctorRef = FirebaseDatabase.getInstance().getReference("Dokter").child(listDokter.get(position).getUid());
-                                        doctorRef.removeValue();
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        if (snapshot.exists()){
+                                            Toast.makeText(v.getContext(), "Dokter ini sedang memiliki jadwal yang aktif", Toast.LENGTH_LONG).show();
+                                        } else {
+                                            AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
+                                            alert.setTitle("Apakah anda yakin menghapus data ini?");
+                                            alert.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialogInterface, int i) {
+                                                    DatabaseReference doctorRef = FirebaseDatabase.getInstance().getReference("Dokter").child(listDokter.get(position).getUid());
+                                                    doctorRef.removeValue();
+
+                                                }
+                                            }).setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialogInterface, int i) {
+                                                    return;
+                                                }
+                                            });
+                                            alert.create();
+                                            alert.show();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
 
                                     }
-                                }).setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        return;
-                                    }
                                 });
-                                alert.create();
-                                alert.show();
                         }
                     }
                 });

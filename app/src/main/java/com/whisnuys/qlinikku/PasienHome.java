@@ -53,7 +53,7 @@ public class PasienHome extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(PasienHome.this, PilihDokter.class));
-                finish();
+                
             }
         });
 
@@ -62,7 +62,7 @@ public class PasienHome extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(PasienHome.this, ReservasiBerlangsung.class));
-                finish();
+
             }
         });
 
@@ -71,7 +71,7 @@ public class PasienHome extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(PasienHome.this, RiwayatReservasiPasien.class));
-                finish();
+
             }
         });
 
@@ -107,10 +107,10 @@ public class PasienHome extends AppCompatActivity {
                     mAvatar.setImageResource(R.drawable.avatarhome);
                     mAvatarNav.setImageResource(R.drawable.avatarhome);
                 } else {
-                    Glide.with(PasienHome.this)
+                    Glide.with(getApplicationContext())
                             .load(snapshot.child("gambar").getValue().toString().trim())
                             .into(mAvatar);
-                    Glide.with(PasienHome.this)
+                    Glide.with(getApplicationContext())
                             .load(snapshot.child("gambar").getValue().toString().trim())
                             .into(mAvatarNav);
                 }

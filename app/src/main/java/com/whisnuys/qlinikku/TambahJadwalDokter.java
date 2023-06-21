@@ -1,17 +1,22 @@
 package com.whisnuys.qlinikku;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.util.Pair;
 
 import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -20,14 +25,15 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class TambahJadwalDokter extends AppCompatActivity {
 
     public static String dokterID;
 
-    TextView timer1, timer2;
-    Button btn;
+    TextView timer1, timer2, selectedDate;
+    Button btn, btnPilihTanggal;
 
     int t1Hr, t1Min, t2Hr, t2Min;
     SimpleDateFormat sdf;
@@ -43,6 +49,53 @@ public class TambahJadwalDokter extends AppCompatActivity {
         timer1 = findViewById(R.id.timer1);
         timer2 = findViewById(R.id.timer2);
         btn = findViewById(R.id.confirm_btn);
+        List<Date> dates = new ArrayList<Date>();
+        selectedDate = findViewById(R.id.show_selected_date);
+        btnPilihTanggal = findViewById(R.id.btnPilihTanggal);
+        MaterialDatePicker.Builder<Pair<Long, Long>> materialDateBuilder = MaterialDatePicker.Builder.dateRangePicker();
+        materialDateBuilder.setTitleText("SELECT A DATE");
+        final MaterialDatePicker materialDatePicker = materialDateBuilder.build();
+
+        btnPilihTanggal.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        materialDatePicker.show(getSupportFragmentManager(), "MATERIAL_DATE_PICKER");
+                    }
+                });
+
+        materialDatePicker.addOnPositiveButtonClickListener(
+                new MaterialPickerOnPositiveButtonClickListener<Pair<Long, Long>>() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onPositiveButtonClick(Pair<Long,Long> selection) {
+
+                        selectedDate.setText("Selected Date is : " + materialDatePicker.getHeaderText());
+                        Long startDate = selection.first;
+                        Long endDate = selection.second;
+//                        String startDateString = DateFormat.format("dd/MM/yyyy", new Date(startDate)).toString();
+//                        String endDateString = DateFormat.format("dd/MM/yyyy", new Date(endDate)).toString();
+//                        String date = "Start: " + startDateString + " End: " + endDateString;
+//                        Toast.makeText(TambahJadwalDokter.this, date, Toast.LENGTH_SHORT).show();
+//                        Log.e("DATE", date);
+
+                        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                        long interval = 24*1000 * 60 * 60;
+                        long endTime =endDate;
+                        long curTime = startDate;
+                        while (curTime <= endTime) {
+                            dates.add(new Date(curTime));
+                            curTime += interval;
+                        }
+                        for(int i=0;i<dates.size();i++){
+                            String result = formatter.format(dates.get(i));
+                        }
+
+                        Log.e("DATES", dates.toString());
+
+                    }
+
+                });
 
         timer1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +112,7 @@ public class TambahJadwalDokter extends AppCompatActivity {
                                 calendar.set(0, 0, 0, t1Hr, t1Min);
 
                                 String dateAndroid = android.text.format.DateFormat.format(
-                                        "kk:mm aa", calendar).toString();
+                                        "kk:mm", calendar).toString();
 
                                 timer1.setText(dateAndroid);
                             }
@@ -84,7 +137,7 @@ public class TambahJadwalDokter extends AppCompatActivity {
                                 calendar.set(0, 0, 0, t2Hr, t2Min);
 
                                 String dateAndroid = android.text.format.DateFormat.format(
-                                        "kk:mm aa", calendar).toString();
+                                        "kk:mm", calendar).toString();
 
                                 timer2.setText(dateAndroid);
                             }
@@ -109,22 +162,25 @@ public class TambahJadwalDokter extends AppCompatActivity {
 
                 for (int i = 0; i < min; i++) {
                     String  day1 = sdf.format(calendar.getTime());
-
                     // add 15 minutes to the current time; the hour adjusts automatically!
                     calendar.add(Calendar.MINUTE, 15);
                     String day2 = sdf.format(calendar.getTime());
 
-//                    String day = day1 + " - " + day2;
-                    results.add(day1);
+                    String day = day1 + " - " + day2;
+                    results.add(day);
                 }
 
+                SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
                 if(results.size() != 0) {
+                    Toast.makeText(getApplicationContext(), "Berhasil di Update", Toast.LENGTH_SHORT).show();
                     ref.setValue(null);
-                    for(String slot: results) {
-                        ref.child(slot).setValue("Available");
-                        Toast.makeText(getApplicationContext(), "Berhasil di Update", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getApplicationContext(), AdminHome.class));
-                        finish();
+                    for(int i=0;i<dates.size();i++){
+                        String resultDate = formatter.format(dates.get(i));
+                        for(String slot: results) {
+                            ref.child(resultDate).child(slot).setValue("Available");
+                            startActivity(new Intent(getApplicationContext(), AdminHome.class));
+                            finish();
+                        }
                     }
                 }
                 else
@@ -163,5 +219,9 @@ public class TambahJadwalDokter extends AppCompatActivity {
         int min = (int) (diff / (1000 * 60));
         min = min/15;
         return (min);
+    }
+
+    public void jadwalDokterBackToHome(View view) {
+        startActivity(new Intent(this, ListDataDokter.class));
     }
 }

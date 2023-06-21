@@ -40,11 +40,12 @@ public class ReservasiBerlangsungAdapter extends FirebaseRecyclerAdapter<Reserva
     protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull ReservasiAktif model) {
         holder.app_dr_name.setText("Dr. " + model.getName());
         holder.app_dr_time.setText(model.getTime());
+        holder.app_dr_tanggal.setText(model.getTanggal());
 
-        if(isEmpty(model.getImage())){
+        if(isEmpty(model.getGambar())){
             holder.app_dr_image.setImageResource(R.drawable.avatarhome);
         } else {
-            Glide.with(holder.itemView.getContext()).load(model.getImage().trim()).into(holder.app_dr_image);
+            Glide.with(holder.itemView.getContext()).load(model.getGambar().trim()).into(holder.app_dr_image);
         }
 
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -68,8 +69,8 @@ public class ReservasiBerlangsungAdapter extends FirebaseRecyclerAdapter<Reserva
                             for(DataSnapshot ds : snapshot.getChildren()) {
                                 if(ds.child("namaLengkap").getValue().equals(model.getName())) {
                                     DatabaseReference ref = ref1.child(ds.getKey());
-                                    ref.child("slots").child(model.getTime()).setValue("Available");
-                                    ref.child("my_app").child(model.getTime()).removeValue();
+                                    ref.child("slots").child(model.getTanggal()).child(model.getTime()).setValue("Available");
+                                    ref.child("my_app").child(model.getTanggal()).child(model.getTime()).removeValue();
                                 }
                             }
                         }
@@ -80,8 +81,9 @@ public class ReservasiBerlangsungAdapter extends FirebaseRecyclerAdapter<Reserva
                         }
                     });
                     DatabaseReference ref3 = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid()).child("riwayat");
-                    ref3.child(model.getName() + model.getTime()).setValue(model);
-                    ref2.child("active_app").child(model.getName() + model.getTime()).removeValue();
+                    ref3.child(model.getTanggal() + model.getTime()).setValue(model);
+                    ref2.child("active_app").child(model.getTanggal() + model.getTime()).removeValue();
+                    context.startActivity(new Intent(context, PasienHome.class));
                 });
 
                 dialog.setNegativeButton("Batal", (dialog12, which) -> {
@@ -102,7 +104,7 @@ public class ReservasiBerlangsungAdapter extends FirebaseRecyclerAdapter<Reserva
     class ViewHolder extends RecyclerView.ViewHolder {
 
         final ShapeableImageView app_dr_image;
-        final TextView app_dr_name, app_dr_time;
+        final TextView app_dr_name, app_dr_time, app_dr_tanggal;
         Button del, reschedule;
 
         public ViewHolder(@NonNull View itemView) {
@@ -111,6 +113,7 @@ public class ReservasiBerlangsungAdapter extends FirebaseRecyclerAdapter<Reserva
             app_dr_image = itemView.findViewById(R.id.app_dr_image);
             app_dr_name = itemView.findViewById(R.id.app_dr_name);
             app_dr_time = itemView.findViewById(R.id.app_dr_time);
+            app_dr_tanggal = itemView.findViewById(R.id.app_dr_date);
 
             del = itemView.findViewById(R.id.selesai);
         }

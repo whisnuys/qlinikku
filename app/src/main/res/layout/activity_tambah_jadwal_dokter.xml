@@ -11,24 +11,53 @@
         android:orientation="vertical" >
 
         <LinearLayout
+            android:id="@+id/listDataTitle"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+            <ImageButton
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@drawable/back_arrow"
+                android:onClick="jadwalDokterBackToHome"
+                android:scaleType="fitCenter" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="Jadwal Dokter"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="24sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="15dp">
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/show_selected_date"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Jadwal Dokter"
-                android:textStyle="bold"
-                android:textSize="20sp"/>
+                android:layout_gravity="center"
+                android:text=""
+                android:textSize="18sp" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="6dp"
-                android:layout_marginBottom="20dp"
-                android:background="#c0c0c0" />
+            <Button
+                android:id="@+id/btnPilihTanggal"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:text="Pilih Tanggal"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

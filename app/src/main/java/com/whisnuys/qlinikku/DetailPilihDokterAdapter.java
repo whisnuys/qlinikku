@@ -2,6 +2,7 @@ package com.whisnuys.qlinikku;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,16 +31,17 @@ public class DetailPilihDokterAdapter extends SectionedRecyclerViewAdapter<Detai
     int selectedItem = -1;
 
     private DatabaseReference ref;
-    String dokterID;
+    String dokterID, datefor;
 
     public DetailPilihDokterAdapter(Activity activity, ArrayList<String> sectionList, HashMap<String, ArrayList<String>> itemList,
-                                  ArrayList<String> docTimings, ArrayList<String> docReserved, String dokterID) {
+                                  ArrayList<String> docTimings, ArrayList<String> docReserved, String dokterID, String datefor) {
         this.activity = activity;
         this.sectionList = sectionList;
         this.itemList = itemList;
         this.docTimings = docTimings;
         this.docReserved = docReserved;
         this.dokterID = dokterID;
+        this.datefor = datefor;
 
         ref = FirebaseDatabase.getInstance().getReference("Dokter").child(dokterID).child("slots");
         notifyDataSetChanged();
@@ -62,7 +64,7 @@ public class DetailPilihDokterAdapter extends SectionedRecyclerViewAdapter<Detai
 
     public void onBindViewHolder(ViewHolder holder, int section, int relativePosition, int absolutePosition) {
         String sItem = itemList.get(sectionList.get(section)).get(relativePosition);
-
+        Log.e("TAG", "onBindViewHolder: " + sItem);
         holder.textView.setText(sItem);
         holder.textView.setOnClickListener(v -> {
             if (docTimings.contains(sItem)) {
@@ -129,7 +131,7 @@ public class DetailPilihDokterAdapter extends SectionedRecyclerViewAdapter<Detai
             String sItem = itemList.get(sectionList.get(selectedSection)).get(selectedItem);
             if (docTimings.contains(sItem)) {
                 selectedItem = -1;
-                ref.child(sItem).setValue("Reserved");
+                ref.child(datefor).child(sItem).setValue("Reserved");
                 notifyDataSetChanged();
                 return sItem;
             }

@@ -21,8 +21,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.imageview.ShapeableImageView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.whisnuys.qlinikku.Models.Pasien;
 
 import java.util.ArrayList;
@@ -114,39 +117,84 @@ public class ListDataPasienAdapter extends RecyclerView.Adapter<ListDataPasienAd
                 alert.setItems(action, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        DatabaseReference checkExist = FirebaseDatabase.getInstance().getReference("Users").child(listPasien.get(position).getId()).child("active_app");
                         switch (i){
                             case 0:
-                                Bundle bundleRes = new Bundle();
-                                bundleRes.putString("dataPasienID", listPasien.get(position).getId());
-                                Intent intentRes = new Intent(v.getContext(), ReservasiAktifPasien.class);
-                                intentRes.putExtras(bundleRes);
-                                context.startActivity(intentRes);
-                                break;
-                            case 1:
-                                Bundle bundle = new Bundle();
-                                bundle.putString("dataPasienID", listPasien.get(position).getId());
-                                Intent intent = new Intent(v.getContext(), EditDataPasien.class);
-                                intent.putExtras(bundle);
-                                context.startActivity(intent);
-                                break;
-                            case 2:
-                                AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
-                                alert.setTitle("Apakah anda yakin menghapus data ini?");
-                                alert.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                                checkExist.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        DatabaseReference pasienRef = FirebaseDatabase.getInstance().getReference("Users").child(listPasien.get(position).getId());
-                                        pasienRef.removeValue();
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        if(snapshot.exists()) {
+                                            Bundle bundleRes = new Bundle();
+                                            bundleRes.putString("dataPasienID", listPasien.get(position).getId());
+                                            Intent intentRes = new Intent(v.getContext(), ReservasiAktifPasien.class);
+                                            intentRes.putExtras(bundleRes);
+                                            context.startActivity(intentRes);
+                                        } else {
+                                            Toast.makeText(v.getContext(), "Pasien tidak memiliki reservasi aktif", Toast.LENGTH_LONG).show();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
 
                                     }
-                                }).setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                                });
+
+                                break;
+                            case 1:
+                                checkExist.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        return;
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        if(snapshot.exists()){
+                                            Toast.makeText(v.getContext(), "Pasien sedang memiliki reservasi aktif", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Bundle bundle = new Bundle();
+                                            bundle.putString("dataPasienID", listPasien.get(position).getId());
+                                            Intent intent = new Intent(v.getContext(), EditDataPasien.class);
+                                            intent.putExtras(bundle);
+                                            context.startActivity(intent);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
                                     }
                                 });
-                                alert.create();
-                                alert.show();
+                                break;
+                            case 2:
+                                checkExist.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        if (snapshot.exists()){
+                                            Toast.makeText(v.getContext(), "Pasien sedang memiliki reservasi aktif", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
+                                            alert.setTitle("Apakah anda yakin menghapus data ini?");
+                                            alert.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialogInterface, int i) {
+                                                    DatabaseReference pasienRef = FirebaseDatabase.getInstance().getReference("Users").child(listPasien.get(position).getId());
+                                                    pasienRef.removeValue();
+
+                                                }
+                                            }).setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialogInterface, int i) {
+                                                    return;
+                                                }
+                                            });
+                                            alert.create();
+                                            alert.show();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+                                break;
                         }
                     }
                 });

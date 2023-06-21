@@ -50,7 +50,7 @@
         <activity
             android:name=".TambahJadwalDokter"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+            android:theme="@style/ThemeMaterialRange" />
         <activity
             android:name=".ListDataDokter"
             android:exported="false"
