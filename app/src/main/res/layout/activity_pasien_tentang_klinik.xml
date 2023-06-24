@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PasienTentangKlinik">
+
+    <LinearLayout
+        android:id="@+id/tentangKlinikTitle"
+        android:paddingHorizontal="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="20dp"
+        android:gravity="center_vertical"
+        android:background="@color/primary"
+        android:orientation="horizontal">
+        <ImageButton
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@drawable/back_arrow"
+            android:onClick="tentangKlinikPasienBackToHome"
+            android:backgroundTint="@color/white"
+            android:scaleType="fitCenter" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="Tentang Klinik"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tentangKlinikTitle">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="25dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imageViewTentangKlinik"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:src="@drawable/image_dummy"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="centerCrop"/>
+
+            <TextView
+                android:id="@+id/textViewNamaKlinik"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/black"
+                android:text="Nama Klinik"
+                android:textStyle="bold"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:id="@+id/textViewDeskripsiKlinik"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:layout_marginTop="20dp"
+                android:text=""/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/black"
+                android:text="Alamat Klinik"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/textViewAlamatKlinik"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text=""/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:text="No Telp : "
+                    android:textSize="16sp"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/textViewNoTelpKlinik"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="123456789"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/buttonWaKlinik"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/waColor"
+                android:text="Whatsapp CS"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:icon="@drawable/ic_wa"
+                app:iconGravity="textStart"/>
+
+            <Button
+                android:id="@+id/buttonEmailKlinik"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#FF9800"
+                android:text="Email"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:icon="@drawable/ic_mail"
+                app:iconGravity="textStart"/>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

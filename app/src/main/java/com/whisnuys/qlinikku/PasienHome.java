@@ -75,6 +75,15 @@ public class PasienHome extends AppCompatActivity {
             }
         });
 
+        CardView cardViewTentangKlinik = findViewById(R.id.cardViewTentangKlinikPasien);
+        cardViewTentangKlinik.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(PasienHome.this, PasienTentangKlinik.class));
+
+            }
+        });
+
 
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();

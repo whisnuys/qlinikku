@@ -26,6 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.whisnuys.qlinikku.Models.PersonDokter;
+import com.whisnuys.qlinikku.Models.TentangKlinik;
 
 import java.util.ArrayList;
 
@@ -62,6 +63,16 @@ public class AdminHome extends AppCompatActivity {
             public void onClick(View view) {
 
                 startActivity(new Intent(AdminHome.this, ListDataPasien.class));
+
+            }
+        });
+
+        CardView cardViewTentangKlinik = findViewById(R.id.cardViewTentangKlinik);
+        cardViewTentangKlinik.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                startActivity(new Intent(AdminHome.this, InputTentangKlinik.class));
 
             }
         });

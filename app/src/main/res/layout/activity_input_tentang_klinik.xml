@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InputTentangKlinik">
+
+    <LinearLayout
+        android:id="@+id/inputTentangKlinik"
+        android:paddingHorizontal="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="20dp"
+        android:gravity="center_vertical"
+        android:background="@color/primary"
+        android:orientation="horizontal">
+        <ImageButton
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@drawable/back_arrow"
+            android:onClick="tentangKlinikBackToHome"
+            android:backgroundTint="@color/white"
+            android:scaleType="fitCenter" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="Ubah Deskripsi Klinik"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/inputTentangKlinik">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="25dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Masukkan Deskripsi Klinik Anda"
+                android:textColor="@color/black"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:textColor="@color/black"
+                android:text="Klik gambar untuk ubah gambar"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    android:id="@+id/imageViewKlinik"
+                    android:layout_width="match_parent"
+                    android:layout_height="160dp"
+                    android:src="@drawable/image_dummy"
+                    android:layout_gravity="center_horizontal"
+                    android:scaleType="centerCrop"
+                    android:clickable="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+<!--                <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--                    android:id="@+id/fab_avatar"-->
+<!--                    android:layout_width="40dp"-->
+<!--                    android:layout_height="40dp"-->
+<!--                    android:clickable="true"-->
+<!--                    app:fabCustomSize="40dp"-->
+<!--                    android:src="@drawable/baseline_edit_24"-->
+<!--                    android:backgroundTint="#f1f1f1"-->
+<!--                    app:rippleColor="@color/white"-->
+<!--                    app:layout_constraintBottom_toBottomOf="@+id/imageViewKlinik"-->
+<!--                    app:layout_constraintEnd_toEndOf="@+id/imageViewKlinik"-->
+<!--                    />-->
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <EditText
+                android:id="@+id/et_namaKlinik"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/rounded_edittext"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:hint="Nama Klinik"/>
+
+            <EditText
+                android:id="@+id/et_deskripsiKlinik"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:lines="10"
+                android:background="@drawable/rounded_edittext"
+                android:padding="10dp"
+                android:hint="Deskripsi Klinik"
+                android:gravity="top|left"
+                android:textColor="@color/black"
+                android:inputType="textCapSentences|textMultiLine" />
+
+            <EditText
+                android:id="@+id/et_alamatKlinik"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:lines="5"
+                android:background="@drawable/rounded_edittext"
+                android:padding="10dp"
+                android:hint="Alamat Klinik"
+                android:gravity="top|left"
+                android:textColor="@color/black"
+                android:inputType="textCapSentences|textMultiLine" />
+
+            <EditText
+                android:id="@+id/et_noTelpKlinik"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/rounded_edittext"
+                android:padding="10dp"
+                android:hint="No Telp Klinik"
+                android:gravity="top|left"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/et_noWhatsappCS"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/rounded_edittext"
+                android:padding="10dp"
+                android:hint="No Whatsapp CS"
+                android:gravity="top|left"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/et_emailKlinik"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/rounded_edittext"
+                android:padding="10dp"
+                android:hint="Email Klinik"
+                android:gravity="top|left"
+                android:textColor="@color/black" />
+
+            <ProgressBar
+                android:id="@+id/progressbar_tentangKlinik"
+                android:layout_marginTop="20dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                style="@style/Widget.AppCompat.ProgressBar"/>
+
+            <Button
+                android:id="@+id/btnSimpanTentangKlinik"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/primary"
+                android:textColor="@color/white"
+                android:text="Simpan"/>
+        </LinearLayout>
+    </ScrollView>
+
+
+
+
+</RelativeLayout>

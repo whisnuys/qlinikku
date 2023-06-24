@@ -16,37 +16,45 @@
         android:theme="@style/Theme.Qlinikku"
         tools:targetApi="31">
         <activity
-            android:name=".RiwayatReservasiPasien"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+            android:name=".PasienTentangKlinik"
+            android:theme="@style/ThemeCustomQlinikku"
             android:exported="false" />
+        <activity
+            android:name=".InputTentangKlinik"
+            android:exported="false"
+            android:theme="@style/ThemeCustomQlinikku" />
+        <activity
+            android:name=".RiwayatReservasiPasien"
+            android:exported="false"
+            android:theme="@style/ThemeCustomQlinikku" />
         <activity
             android:name=".ReservasiAktifPasien"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+            android:theme="@style/ThemeCustomQlinikku" />
         <activity
             android:name=".EditDataPasien"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+            android:theme="@style/ThemeCustomQlinikku" />
         <activity
             android:name=".ListDataPasien"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+            android:theme="@style/ThemeCustomQlinikku" />
         <activity
             android:name=".EditDataDokter"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+            android:theme="@style/ThemeCustomQlinikku" />
         <activity
             android:name=".ReservasiBerlangsung"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+            android:theme="@style/ThemeCustomQlinikku" />
         <activity
             android:name=".DetailPilihDokter"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+            android:theme="@style/ThemeCustomQlinikku" />
         <activity
             android:name=".PilihDokter"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+            android:theme="@style/ThemeCustomQlinikku" />
         <activity
             android:name=".TambahJadwalDokter"
             android:exported="false"
@@ -54,35 +62,35 @@
         <activity
             android:name=".ListDataDokter"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+            android:theme="@style/ThemeCustomQlinikku" />
         <activity
             android:name=".TambahDokter"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+            android:theme="@style/ThemeCustomQlinikku" />
         <activity
             android:name=".EditProfile"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+            android:theme="@style/ThemeCustomQlinikku" />
         <activity
             android:name=".AdminHome"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+            android:theme="@style/ThemeCustomQlinikku" />
         <activity
             android:name=".PasienHome"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+            android:theme="@style/ThemeCustomQlinikku" />
         <activity
             android:name=".RegisterPasien"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+            android:theme="@style/ThemeCustomQlinikku" />
         <activity
             android:name=".Login"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+            android:theme="@style/ThemeCustomQlinikku" />
         <activity
             android:name=".SplashScreen"
             android:exported="true"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+            android:theme="@style/ThemeCustomQlinikku">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
