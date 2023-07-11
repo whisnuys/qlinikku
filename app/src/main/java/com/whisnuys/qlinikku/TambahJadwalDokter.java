@@ -70,7 +70,7 @@ public class TambahJadwalDokter extends AppCompatActivity {
                     @Override
                     public void onPositiveButtonClick(Pair<Long,Long> selection) {
 
-                        selectedDate.setText("Selected Date is : " + materialDatePicker.getHeaderText());
+                        selectedDate.setText("Tanggal Pilih : " + materialDatePicker.getHeaderText());
                         Long startDate = selection.first;
                         Long endDate = selection.second;
 //                        String startDateString = DateFormat.format("dd/MM/yyyy", new Date(startDate)).toString();

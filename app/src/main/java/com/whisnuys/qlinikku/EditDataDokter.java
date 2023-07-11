@@ -43,7 +43,7 @@ import java.util.UUID;
 
 public class EditDataDokter extends AppCompatActivity {
 
-    EditText et_namalengkap, et_noHp;
+    EditText et_namalengkap, et_noHp, et_idDokter;
     String[] listJK, listSpesialis;
     Spinner sp_jenisKelamin, sp_spesialisasi;
     ShapeableImageView imgAvatarDokter;
@@ -61,6 +61,8 @@ public class EditDataDokter extends AppCompatActivity {
 
         et_namalengkap = findViewById(R.id.et_namalengkap_dokter);
         et_noHp = findViewById(R.id.new_et_noHP_dokter);
+        et_idDokter = findViewById(R.id.new_et_id_dokter);
+        et_idDokter.setVisibility(View.GONE);
         sp_jenisKelamin = findViewById(R.id.new_spinnerJK_dokter);
         sp_spesialisasi = findViewById(R.id.new_spinnerSpesialis);
         imgAvatarDokter = findViewById(R.id.new_img_avatar_dokter);
@@ -83,6 +85,7 @@ public class EditDataDokter extends AppCompatActivity {
             public void onClick(View view) {
                 String namaLengkap = et_namalengkap.getText().toString();
                 String noHP = et_noHp.getText().toString();
+                String id = et_idDokter.getText().toString();
                 String jk = sp_jenisKelamin.getSelectedItem().toString();
                 String spesialis = sp_spesialisasi.getSelectedItem().toString();
 
@@ -117,6 +120,7 @@ public class EditDataDokter extends AppCompatActivity {
                                     setDokter.setNoTelepon(noHP);
                                     setDokter.setJenisKelamin(jk);
                                     setDokter.setSpesialis(spesialis);
+                                    setDokter.setUid(id);
                                     setDokter.setGambar(uri.toString());
 
                                     updateDokter(setDokter);
@@ -150,6 +154,7 @@ public class EditDataDokter extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String namaLengkap = snapshot.child("namaLengkap").getValue().toString();
                 String noHP = snapshot.child("noTelepon").getValue().toString();
+                String id = snapshot.child("uid").getValue().toString();
                 String jk = snapshot.child("jenisKelamin").getValue().toString();
                 String spesialis = snapshot.child("spesialis").getValue().toString();
                 String gambar_avatar = snapshot.child("gambar").getValue().toString().trim();
@@ -171,6 +176,7 @@ public class EditDataDokter extends AppCompatActivity {
 
                 et_namalengkap.setText(namaLengkap);
                 et_noHp.setText(noHP);
+                et_idDokter.setText(id);
             }
 
             @Override
@@ -215,6 +221,7 @@ public class EditDataDokter extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
                 et_namalengkap.setText("");
                 et_noHp.setText("");
+                et_idDokter.setText("");
                 Toast.makeText(EditDataDokter.this, "Update Berhasil", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(EditDataDokter.this, ListDataDokter.class));
                 finish();

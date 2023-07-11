@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -48,7 +49,7 @@ import java.util.UUID;
 public class EditProfile extends AppCompatActivity {
 
     String[] listJK;
-    EditText et_namaLengkap, et_nik, et_tgllahir, et_alamat, et_nohp, et_email, et_password, et_role;
+    EditText et_idPasien, et_namaLengkap, et_nik, et_tgllahir, et_alamat, et_nohp, et_email, et_password, et_role;
     Spinner spinnerJK;
     ShapeableImageView imgAvatar;
     Button btnTglLahir, btnSimpan;
@@ -71,9 +72,11 @@ public class EditProfile extends AppCompatActivity {
         et_email = findViewById(R.id.et_email);
         et_password = findViewById(R.id.et_password);
         et_role = findViewById(R.id.et_role);
+        et_idPasien = findViewById(R.id.et_idPasien);
         et_email.setVisibility(View.GONE);
         et_password.setVisibility(View.GONE);
         et_role.setVisibility(View.GONE);
+        et_idPasien.setVisibility(View.GONE);
         spinnerJK = findViewById(R.id.new_spinnerJK);
         imgAvatar = findViewById(R.id.img_avatar);
         btnTglLahir = findViewById(R.id.btn_tgllahir);
@@ -111,6 +114,8 @@ public class EditProfile extends AppCompatActivity {
 
                 }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
                 datePickerDialog.show();
+                datePickerDialog.getButton(DatePickerDialog.BUTTON_NEGATIVE).setTextColor(Color.BLACK);
+                datePickerDialog.getButton(DatePickerDialog.BUTTON_POSITIVE).setTextColor(Color.BLACK);
             }
         });
 
@@ -126,6 +131,7 @@ public class EditProfile extends AppCompatActivity {
                 String email = et_email.getText().toString();
                 String password = et_password.getText().toString();
                 String role = et_role.getText().toString();
+                String id = et_idPasien.getText().toString();
 
                 if(isEmpty(namaLengkap)){
                     et_namaLengkap.setError("Nama lengkap tidak boleh kosong");
@@ -171,6 +177,7 @@ public class EditProfile extends AppCompatActivity {
                                     setPasien.setEmail(email);
                                     setPasien.setPassword(password);
                                     setPasien.setRole(role);
+                                    setPasien.setId(id);
                                     setPasien.setGambar(uri.toString());
 
                                     updatePasien(setPasien);
@@ -214,6 +221,7 @@ public class EditProfile extends AppCompatActivity {
                 String email = snapshot.child("email").getValue().toString();
                 String password = snapshot.child("password").getValue().toString();
                 String role = snapshot.child("role").getValue().toString();
+                String id = snapshot.child("id").getValue().toString();
 
                 if(isEmpty(gambar_avatar)){
                     imgAvatar.setImageResource(R.drawable.avatarhome);
@@ -234,6 +242,7 @@ public class EditProfile extends AppCompatActivity {
                 et_email.setText(email);
                 et_password.setText(password);
                 et_role.setText(role);
+                et_idPasien.setText(id);
             }
 
             @Override
@@ -276,7 +285,34 @@ public class EditProfile extends AppCompatActivity {
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         DatabaseReference dbF = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
 
-        dbF.setValue(setPasien).addOnSuccessListener(new OnSuccessListener<Void>() {
+//        dbF.setValue(setPasien).addOnSuccessListener(new OnSuccessListener<Void>() {
+//            @Override
+//            public void onSuccess(Void aVoid) {
+//                progressBar.setVisibility(View.GONE);
+//                et_namaLengkap.setText("");
+//                et_nik.setText("");
+//                et_tgllahir.setText("");
+//                et_alamat.setText("");
+//                et_nohp.setText("");
+//                et_password.setText("");
+//                et_email.setText("");
+//                et_role.setText("");
+//                et_idPasien.setText("");
+//                Toast.makeText(EditProfile.this, "Update Berhasil", Toast.LENGTH_SHORT).show();
+//                startActivity(new Intent(EditProfile.this, PasienHome.class));
+//                finish();
+//            }
+//        });
+        dbF.child("namaLengkap").setValue(setPasien.getNamaLengkap());
+        dbF.child("nik").setValue(setPasien.getNik());
+        dbF.child("tanggalLahir").setValue(setPasien.getTanggalLahir());
+        dbF.child("alamat").setValue(setPasien.getAlamat());
+        dbF.child("noHp").setValue(setPasien.getNoHp());
+        dbF.child("jenisKelamin").setValue(setPasien.getJenisKelamin());
+        dbF.child("email").setValue(setPasien.getEmail());
+        dbF.child("password").setValue(setPasien.getPassword());
+        dbF.child("role").setValue(setPasien.getRole());
+        dbF.child("gambar").setValue(setPasien.getGambar()).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 progressBar.setVisibility(View.GONE);
@@ -285,6 +321,10 @@ public class EditProfile extends AppCompatActivity {
                 et_tgllahir.setText("");
                 et_alamat.setText("");
                 et_nohp.setText("");
+                et_role.setText("");
+                et_password.setText("");
+                et_email.setText("");
+                et_idPasien.setText("");
                 Toast.makeText(EditProfile.this, "Update Berhasil", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(EditProfile.this, PasienHome.class));
                 finish();

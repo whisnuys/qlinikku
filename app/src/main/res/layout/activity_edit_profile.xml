@@ -190,6 +190,16 @@
                 android:enabled="false"
                 android:background="@drawable/rounded_edittext2"
                 android:inputType="text"/>
+            <EditText
+                android:id="@+id/et_idPasien"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:padding="15dp"
+                android:hint="Role"
+                android:enabled="false"
+                android:background="@drawable/rounded_edittext2"
+                android:inputType="text"/>
 
             <ProgressBar
                 android:id="@+id/progressbar_editprofile"

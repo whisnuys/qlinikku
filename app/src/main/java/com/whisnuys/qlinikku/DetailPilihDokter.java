@@ -99,12 +99,18 @@ public class DetailPilihDokter extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<Date> dates = new ArrayList<>();
                 for (DataSnapshot date: snapshot.getChildren()) {
+
                     Locale.setDefault(new Locale("in", "ID"));
                     SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
                     try {
                         Date datefor = format.parse(date.getKey());
                         dates.add(datefor);
-
+                        Collections.sort(dates, new Comparator<Date>() {
+                            @Override
+                            public int compare(Date o1, Date o2) {
+                                return o1.compareTo(o2);
+                            }
+                        });
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
@@ -264,7 +270,6 @@ public class DetailPilihDokter extends AppCompatActivity {
                 Toast.makeText(this, "Reservasi Berhasil", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), PasienHome.class);
                 startActivity(intent);
-                finish();
 
             }
             else

@@ -5,10 +5,12 @@ import static android.text.TextUtils.isEmpty;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +19,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.OnUserEarnedRewardListener;
+import com.google.android.gms.ads.rewarded.RewardItem;
+import com.google.android.gms.ads.rewarded.RewardedAd;
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,10 +38,30 @@ public class PasienTentangKlinik extends AppCompatActivity {
     private TextView tvNamaKlinik, tvAlamatKlinik, tvNoTelpKlinik, tvDeskripsiKlinik;
     private Button btnWaKlinik, btnEmailKlinik;
 
+    private RewardedAd rewardedAd;
+    private final String TAG = "TentangBackReward";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pasien_tentang_klinik);
+
+        AdRequest adRequestReward = new AdRequest.Builder().build();
+        RewardedAd.load(this, "ca-app-pub-3940256099942544/5224354917",
+                adRequestReward, new RewardedAdLoadCallback() {
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        // Handle the error.
+                        Log.d(TAG, loadAdError.toString());
+                        rewardedAd = null;
+                    }
+
+                    @Override
+                    public void onAdLoaded(@NonNull RewardedAd ad) {
+                        rewardedAd = ad;
+                        Log.d(TAG, "Ad was loaded.");
+                    }
+                });
 
         tvNamaKlinik = findViewById(R.id.textViewNamaKlinik);
         tvAlamatKlinik = findViewById(R.id.textViewAlamatKlinik);
@@ -95,6 +123,20 @@ public class PasienTentangKlinik extends AppCompatActivity {
         btnEmailKlinik.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (rewardedAd != null) {
+                    Activity activityContext = PasienTentangKlinik.this;
+                    rewardedAd.show(activityContext, new OnUserEarnedRewardListener() {
+                        @Override
+                        public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
+                            // Handle the reward.
+                            Log.d(TAG, "The user earned the reward.");
+                            int rewardAmount = rewardItem.getAmount();
+                            String rewardType = rewardItem.getType();
+                        }
+                    });
+                } else {
+                    Log.d(TAG, "The rewarded ad wasn't ready yet.");
+                }
                 Intent intent = new Intent(Intent.ACTION_SEND);
 
                 intent.putExtra(Intent.EXTRA_EMAIL, new String[]{email});
@@ -105,6 +147,7 @@ public class PasienTentangKlinik extends AppCompatActivity {
     }
 
     public void tentangKlinikPasienBackToHome(View view) {
+
         startActivity(new Intent(this, PasienHome.class));
     }
 }
