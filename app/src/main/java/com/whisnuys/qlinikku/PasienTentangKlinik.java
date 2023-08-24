@@ -38,7 +38,6 @@ public class PasienTentangKlinik extends AppCompatActivity {
     private TextView tvNamaKlinik, tvAlamatKlinik, tvNoTelpKlinik, tvDeskripsiKlinik;
     private Button btnWaKlinik, btnEmailKlinik;
 
-    private RewardedAd rewardedAd;
     private final String TAG = "TentangBackReward";
 
     @Override
@@ -46,22 +45,7 @@ public class PasienTentangKlinik extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pasien_tentang_klinik);
 
-        AdRequest adRequestReward = new AdRequest.Builder().build();
-        RewardedAd.load(this, "ca-app-pub-3940256099942544/5224354917",
-                adRequestReward, new RewardedAdLoadCallback() {
-                    @Override
-                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
-                        // Handle the error.
-                        Log.d(TAG, loadAdError.toString());
-                        rewardedAd = null;
-                    }
 
-                    @Override
-                    public void onAdLoaded(@NonNull RewardedAd ad) {
-                        rewardedAd = ad;
-                        Log.d(TAG, "Ad was loaded.");
-                    }
-                });
 
         tvNamaKlinik = findViewById(R.id.textViewNamaKlinik);
         tvAlamatKlinik = findViewById(R.id.textViewAlamatKlinik);
@@ -105,38 +89,52 @@ public class PasienTentangKlinik extends AppCompatActivity {
 
         btnWaKlinik.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) { // use country code with your phone number
-                String url = "https://api.whatsapp.com/send?phone=" + "62" + wa + "&text=" + "Halo, saya ingin bertanya mengenai pelayanan di " + namaKlinik;
-                try {
-                    PackageManager pm = getApplicationContext().getPackageManager();
-                    pm.getPackageInfo("com.whatsapp", PackageManager.GET_ACTIVITIES);
+            public void onClick(View view) {
+                if (whatsappInstalledOrNot("com.whatsapp")) {
+                    String url = "https://api.whatsapp.com/send?phone=" + "62" + wa + "&text=" + "Halo, saya ingin bertanya mengenai pelayanan di " + namaKlinik;
                     Intent i = new Intent(Intent.ACTION_VIEW);
                     i.setData(Uri.parse(url));
                     startActivity(i);
-                } catch (PackageManager.NameNotFoundException e) {
-                    Toast.makeText(PasienTentangKlinik.this, "Whatsapp app not installed in your phone", Toast.LENGTH_SHORT).show();
-                    e.printStackTrace();
+                } else if (whatsappInstalledOrNot("com.whatsapp.w4b")){
+                    String url = "https://api.whatsapp.com/send?phone=" + "62" + wa + "&text=" + "Halo, saya ingin bertanya mengenai pelayanan di " + namaKlinik;
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(url));
+                    startActivity(i);
+                } else {
+                    Toast.makeText(PasienTentangKlinik.this, "Whatsapp belum diinstall", Toast.LENGTH_SHORT).show();
                 }
+            }
+//            @Override
+//            public void onClick(View view) { // use country code with your phone number
+//                String url = "https://api.whatsapp.com/send?phone=" + "62" + wa + "&text=" + "Halo, saya ingin bertanya mengenai pelayanan di " + namaKlinik;
+//                try {
+//                    PackageManager pm = getApplicationContext().getPackageManager();
+//                    pm.getPackageInfo("com.whatsapp", PackageManager.GET_ACTIVITIES);
+//                    Intent i = new Intent(Intent.ACTION_VIEW);
+//                    i.setData(Uri.parse(url));
+//                    startActivity(i);
+//                } catch (PackageManager.NameNotFoundException e) {
+//                    Toast.makeText(PasienTentangKlinik.this, "Whatsapp app not installed in your phone", Toast.LENGTH_SHORT).show();
+//                    e.printStackTrace();
+//                }
+//            }
+
+            private boolean whatsappInstalledOrNot(String s) {
+                PackageManager pm = getApplicationContext().getPackageManager();
+                boolean app_installed = false;
+                try {
+                    pm.getPackageInfo(s, PackageManager.GET_ACTIVITIES);
+                    app_installed = true;
+                } catch (PackageManager.NameNotFoundException e) {
+                    app_installed = false;
+                }
+                return app_installed;
             }
         });
 
         btnEmailKlinik.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (rewardedAd != null) {
-                    Activity activityContext = PasienTentangKlinik.this;
-                    rewardedAd.show(activityContext, new OnUserEarnedRewardListener() {
-                        @Override
-                        public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
-                            // Handle the reward.
-                            Log.d(TAG, "The user earned the reward.");
-                            int rewardAmount = rewardItem.getAmount();
-                            String rewardType = rewardItem.getType();
-                        }
-                    });
-                } else {
-                    Log.d(TAG, "The rewarded ad wasn't ready yet.");
-                }
                 Intent intent = new Intent(Intent.ACTION_SEND);
 
                 intent.putExtra(Intent.EXTRA_EMAIL, new String[]{email});
